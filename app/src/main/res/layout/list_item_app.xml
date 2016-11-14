@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical"
+        android:background="@drawable/list_item_bg_selector">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:text="应用名称"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_toRightOf="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RatingBar
+                android:id="@+id/rb_star"
+                android:layout_below="@+id/tv_name"
+                android:layout_toRightOf="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:isIndicator="true"
+                android:progressDrawable="@drawable/custom_ratingbar"
+                android:rating="3"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/tv_size"
+                android:text="100MB"
+                android:textSize="16sp"
+                android:textColor="#8000"
+                android:layout_toRightOf="@+id/iv_icon"
+                android:layout_below="@+id/rb_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_download"/>
+
+                <TextView
+                    android:layout_marginTop="3dp"
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    android:text="下载"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:background="#8000"
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"/>
+        <TextView
+            android:id="@+id/tv_des"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textColor="#8000"
+            android:textSize="16sp"
+            android:text="郝刚卡号给卡号给看哈看好该卡号给卡号噶客户大师级的咖啡大白菜"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

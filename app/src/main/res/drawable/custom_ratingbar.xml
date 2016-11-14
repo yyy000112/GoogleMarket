@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/background"
+        android:drawable="@mipmap/rating_small_empty"/>
+
+    <item android:id="@+id/background2"
+        android:drawable="@mipmap/rating_small_half"/>
+
+    <item android:id="@+id/background3"
+        android:drawable="@mipmap/rating_small_full"/>
+
+</layer-list>

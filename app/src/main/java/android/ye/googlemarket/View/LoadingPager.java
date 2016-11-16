@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.ye.googlemarket.Manager.ThreadManager;
 import android.ye.googlemarket.R;
 import android.ye.googlemarket.Utils.UIUtils;
 
@@ -100,7 +101,7 @@ public abstract class LoadingPager extends FrameLayout {
     public void loadData(){
         if (mCurrentStates!=STATE_LOADING){
             mCurrentStates = STATE_LOADING;
-            new Thread(){
+           /* new Thread(){
                 @Override
                 public void run() {
                   final ResultState resultState =  onLoad();
@@ -117,7 +118,25 @@ public abstract class LoadingPager extends FrameLayout {
                     });
 
                 }
-            }.start();
+            }.start();*/
+
+            ThreadManager.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    final ResultState resultState =  onLoad();
+                    UIUtils.runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (resultState!=null){
+                                //获取当前网络结束后的状态
+                                mCurrentStates = resultState.getState();
+                                //更新View
+                                showRightPage();
+                            }
+                        }
+                    });
+                }
+            });
         }
 
     }

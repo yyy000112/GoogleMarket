@@ -1,6 +1,7 @@
 package android.ye.googlemarket.Activity;
 
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.ye.googlemarket.PagerTab;
+import android.ye.googlemarket.Permit.PermissionCallBack;
+import android.ye.googlemarket.Permit.PermissionManager;
 import android.ye.googlemarket.R;
 import android.ye.googlemarket.Utils.LogUtils;
 import android.ye.googlemarket.Utils.UIUtils;
@@ -33,7 +36,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initView();
         initActionBar();
+
+        requirePermit();
     }
+
 
     private void initActionBar() {
         ActionBar actionBar =getSupportActionBar();
@@ -120,4 +126,63 @@ public class MainActivity extends BaseActivity {
             return tabNames.length;
         }
     }
+
+
+
+    private void requirePermit() {
+        if(PermissionManager.getInstance().hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            //已经获取权限
+        }
+        else{
+            if(PermissionManager.getInstance().shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                //已经询问过权限但是被拒绝，在这里一般显示一些为什么要需要权限，提示用户去设置里激活权限
+                UIUtils.ToastShow("需激活权限，否则某些功能无法正常使用");
+
+            }
+            else{
+                PermissionManager.getInstance().requestPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new PermissionCallBack() {
+                            @Override
+                            public void onGranted(String[] permissions, int[] grantResults) {
+                                //获得权限成功
+                            }
+
+                            @Override
+                            public void onFailed(String[] permissions, int[] grantResults) {
+                                //获得权限失败
+                                //permission数组与grantResults数组位置想对应，可以看到具体每个权限是否被获取
+                            }
+                        });
+            }
+        }
+
+        if(PermissionManager.getInstance().hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+            //已经获取权限
+        }
+        else{
+            if(PermissionManager.getInstance().shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                //已经询问过权限但是被拒绝，在这里一般显示一些为什么要需要权限，提示用户去设置里激活权限
+                UIUtils.ToastShow("需激活权限，否则某些功能无法正常使用");
+
+            }
+            else{
+                PermissionManager.getInstance().requestPermission(this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        new PermissionCallBack() {
+                            @Override
+                            public void onGranted(String[] permissions, int[] grantResults) {
+                                //获得权限成功
+                            }
+
+                            @Override
+                            public void onFailed(String[] permissions, int[] grantResults) {
+                                //获得权限失败
+                                //permission数组与grantResults数组位置想对应，可以看到具体每个权限是否被获取
+                            }
+                        });
+            }
+        }
+    }
+
 }

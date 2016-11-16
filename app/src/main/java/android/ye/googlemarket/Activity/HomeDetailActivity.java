@@ -1,21 +1,20 @@
 package android.ye.googlemarket.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.ye.googlemarket.Holder.AppDetailHolder;
 import android.ye.googlemarket.Holder.DetailDesHolder;
+import android.ye.googlemarket.Holder.DetailDownHolder;
 import android.ye.googlemarket.Holder.HorizontalHolder;
 import android.ye.googlemarket.Holder.SafeDetailHolder;
 import android.ye.googlemarket.Http.protocol.HomeDetailProtocol;
 import android.ye.googlemarket.R;
+import android.ye.googlemarket.Utils.LogUtils;
 import android.ye.googlemarket.Utils.UIUtils;
 import android.ye.googlemarket.View.LoadingPager;
 import android.ye.googlemarket.domain.AppDetail;
-
-import java.util.ArrayList;
 
 /**
  *
@@ -57,6 +56,11 @@ public class HomeDetailActivity extends BaseActivity{
                 flDetailDes.addView(detailDesHolder.getRootView());
                 detailDesHolder.setData(data);
 
+                //加载下载布局
+                FrameLayout flDownload = (FrameLayout) view.findViewById(R.id.fl_detail_download);
+                DetailDownHolder detailDownHolder = new DetailDownHolder();
+                flDownload.addView(detailDownHolder.getRootView());
+                detailDownHolder.setData(data);
                 return view;
             }
 
@@ -64,6 +68,7 @@ public class HomeDetailActivity extends BaseActivity{
             public ResultState onLoad() {
                 HomeDetailProtocol protocol = new HomeDetailProtocol(packageName);
                 data = protocol.getData(0);
+
 
                 if (data != null) {
                     return ResultState.STATE_SUCCESS;

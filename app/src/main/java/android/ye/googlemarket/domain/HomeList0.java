@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class HomeList0 {
     public ArrayList<String> picture;
-    public ArrayList<List> list;
+    public static ArrayList<List> list;
 
-    public class List{
+    public static class List{
         public String id;
         public String name;
         public String packageName;
@@ -23,4 +23,13 @@ public class HomeList0 {
         public String des;
 
     }
+  /* public String des;
+    public String downloadUrl;
+    public String iconUrl;
+    public String id;
+    public String name;
+    public String packageName;
+    public long size;
+    public float stars;
+    public ArrayList<String> picture;*/
 }

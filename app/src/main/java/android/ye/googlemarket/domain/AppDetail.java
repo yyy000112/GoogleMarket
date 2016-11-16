@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class AppDetail {
     public ArrayList<SafeInfo> safe;
     public ArrayList<String> screen;
+    public ArrayList<String> picture;
 
 
     public String des;

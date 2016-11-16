@@ -9,10 +9,12 @@ import android.ye.googlemarket.Adapter.MyBaseAdapter;
 import android.ye.googlemarket.Holder.HomeHeaderHolder;
 import android.ye.googlemarket.Holder.HomeHolder;
 import android.ye.googlemarket.Http.protocol.HomeProtocol;
+import android.ye.googlemarket.Utils.LogUtils;
 import android.ye.googlemarket.Utils.UIUtils;
 import android.ye.googlemarket.View.LoadingPager;
 import android.ye.googlemarket.View.MyListView;
-import android.ye.googlemarket.domain.HomeList0;
+import android.ye.googlemarket.domain.AppDetail;
+
 
 import java.util.ArrayList;
 
@@ -22,8 +24,9 @@ import java.util.ArrayList;
 public class HomeFragment extends BaseFragment {
 
     private MyListView llHome;
-    private ArrayList<HomeList0.List> data;
+    //private ArrayList<HomeList0.List> data;
     private ArrayList<String> pictureList;
+    private ArrayList<AppDetail> data;
 
     //运行在主线程，可以随意更新UI
     @Override
@@ -39,13 +42,13 @@ public class HomeFragment extends BaseFragment {
 
         if (pictureList!=null){
             header.setData(pictureList);
-        }
 
+        }
         llHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                //去掉头布局
-                HomeList0.List list = data.get(position-1);
+                AppDetail list = data.get(position-1);
                 if (list !=null){
                     Intent intent = new Intent(UIUtils.getContext(),HomeDetailActivity.class);
                     intent.putExtra("packageName",list.packageName);
@@ -64,23 +67,23 @@ public class HomeFragment extends BaseFragment {
     public LoadingPager.ResultState onLoad() {
         HomeProtocol protocol = new HomeProtocol();
         //加载第一页数据
-        data =protocol.getData(0);
+        data = protocol.getData(0);
 
         pictureList = protocol.getPictureList();
 
         return check(data);
     }
 
-    class HomeAdapter extends MyBaseAdapter<HomeList0.List>{
+    class HomeAdapter extends MyBaseAdapter<AppDetail>{
 
-        public HomeAdapter(ArrayList<HomeList0.List> data) {
+        public HomeAdapter(ArrayList<AppDetail> data) {
             super(data);
         }
 
 
 
         @Override
-        public ArrayList<HomeList0.List> onLoadMore() {
+        public ArrayList<AppDetail> onLoadMore() {
            /* //在子线程调用
             ArrayList<HomeList0.List> moreData = new ArrayList<HomeList0.List>();
             for (int i =0;i<20;i++){
@@ -90,12 +93,14 @@ public class HomeFragment extends BaseFragment {
             HomeProtocol protocol = new HomeProtocol();
 
             //获取当前集合大小
-            ArrayList<HomeList0.List> moreData = protocol.getData(getListSize());
+           // ArrayList<HomeList0.List> moreData = protocol.getData(getListSize());
+
+            ArrayList<AppDetail> moreData = protocol.getData(getListSize());
             return moreData;
         }
 
         @Override
-        public BaseHolder<HomeList0.List> getHolder() {
+        public BaseHolder<AppDetail> getHolder() {
            return  new HomeHolder();
         }
     }

@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.ye.googlemarket.Holder.BaseHolder;
 import android.ye.googlemarket.Holder.MoreHolder;
+import android.ye.googlemarket.Manager.ThreadManager;
 import android.ye.googlemarket.R;
 import android.ye.googlemarket.Utils.UIUtils;
 
@@ -98,7 +99,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     public void loadMore(final MoreHolder holder) {
         if (!isLoadMore){
             isLoadMore = true;
-            new Thread(){
+            /*new Thread(){
                 @Override
                 public void run() {
                     //由子类实现更多数据
@@ -127,7 +128,38 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
                     });
 
                 }
-            }.start();
+            }.start();*/
+
+            ThreadManager.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    //由子类实现更多数据
+                    final ArrayList<T> moreData = onLoadMore();
+                    //运行在主线程更新UI
+                    UIUtils.runOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (moreData!=null){
+                                //分页加载
+                                if (moreData.size() < 20 ){
+                                    holder.setData(MoreHolder.STATE_MORE_NONE);
+                                    UIUtils.ToastShow("数据加载完咯");
+                                }else {
+                                    holder.setData(MoreHolder.STATE_MORE_ERROE);
+                                }
+                                data.addAll(moreData);
+                                //更新页面
+                                MyBaseAdapter.this.notifyDataSetChanged();
+                            }else {
+                                //加载失败
+                                holder.setData(MoreHolder.STATE_MORE_ERROE);
+                            }
+                            isLoadMore = false;
+                        }
+                    });
+                }
+            });
+
         }
 
     }

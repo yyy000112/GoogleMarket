@@ -101,7 +101,7 @@ public abstract class LoadingPager extends FrameLayout {
     public void loadData(){
         if (mCurrentStates!=STATE_LOADING){
             mCurrentStates = STATE_LOADING;
-           /* new Thread(){
+            new Thread(){
                 @Override
                 public void run() {
                   final ResultState resultState =  onLoad();
@@ -118,7 +118,7 @@ public abstract class LoadingPager extends FrameLayout {
                     });
 
                 }
-            }.start();*/
+            }.start();
 
             ThreadManager.getThreadPool().execute(new Runnable() {
                 @Override

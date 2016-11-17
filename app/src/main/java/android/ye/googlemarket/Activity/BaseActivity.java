@@ -10,8 +10,10 @@ import android.ye.googlemarket.Permit.PermissionManager;
 public class BaseActivity extends AppCompatActivity {
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
         PermissionManager.getInstance().onRequestPermissionResult(requestCode, permissions, grantResults);
     }
+
 
 }
 
